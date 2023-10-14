@@ -33,7 +33,7 @@ contract Task2 with Deployable {
     send(SendParameters{
         to: self.admin,
         value: context().value,
-        body: beginCell().storeUInt(42).storeRef(emptyCell()).endcell()
+        body: beginCell().storeUint(42).storeRef(emptyCell()).endcell()
       }
     );
   }
