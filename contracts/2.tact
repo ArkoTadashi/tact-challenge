@@ -26,8 +26,17 @@ contract Task2 with Deployable {
   }
   
   receive(msg: Refund) {
+    
   }
 
   receive(msg: Slice) {
+    send(sendParameters{
+        to: admin,
+        value: 0,
+        mode: 128,
+        bounce: true,
+        body: SomeMessage{arg1: msg.loadBits(), arg2: msg.loadRef().asSlice().loadBits()}.toCell()
+      }
+    );
   }
 }
