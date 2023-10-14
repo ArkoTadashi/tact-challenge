@@ -29,7 +29,7 @@ contract Task2 with Deployable {
     if (context().sender == self.admin) {
       send(SendParameters{
         to: msg.sender,
-        value: context().value
+        value: 1.0*context().value/1000000000
       });
     }
   }
@@ -37,7 +37,7 @@ contract Task2 with Deployable {
   receive(msg: Slice) {
     send(SendParameters{
       to: self.admin,
-      value: context().value,
+      value: 1.0*context().value/1000000000,
       body: beginCell().storeAddress(context().sender).storeRef(beginCell().storeSlice(msg).endCell()).endCell()
     });
   }
