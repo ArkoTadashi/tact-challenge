@@ -26,11 +26,10 @@ contract Task2 with Deployable {
   }
   
   receive(msg: Refund) {
-    if (context().sender == self.admin) {
+    if (sender() == self.admin) {
       send(SendParameters{
         to: msg.sender,
         value: 0,
-        bounce: false,
         mode: 128
       });
     }
@@ -39,8 +38,7 @@ contract Task2 with Deployable {
   receive(msg: Slice) {
     send(SendParameters{
       to: self.admin,
-      value: context().value,
-      bounce: true,
+      value: context().value/1000000000,
       body: beginCell().storeAddress(context().sender).storeRef(msg.asCell()).endCell()
     });
   }
