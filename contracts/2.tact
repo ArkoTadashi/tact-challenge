@@ -32,10 +32,11 @@ contract Task2 with Deployable {
   receive(msg: Slice) {
     send(SendParameters{
         to: self.admin,
-        value: 0,
-        mode: 128,
-        bounce: true,
-        body: SomeMessage{arg1: msg.loadBits(), arg2: msg.loadRef().asSlice().loadBits()}.toCell()
+        value: context().value,
+        body: beginCell().
+          storeUInt(context().sender.asSlice(), 8).
+          storeRef(beginCell().storeUInt(context.raw.asSlice(), 8).endCell()).
+          endCell();
       }
     );
   }
