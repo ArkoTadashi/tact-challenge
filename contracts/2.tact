@@ -26,13 +26,13 @@ contract Task2 with Deployable {
   }
   
   receive(msg: Refund) {
-    if (context().sender == self.admin) {
-      send(SendParameters{
-        to: msg.sender,
-        value: 0,
-        mode: 128
-      });
-    }
+    require(context().sender == self.admin, "Not admin!");
+    send(SendParameters{
+      to: msg.sender,
+      value: 0,
+      mode: 128,
+      bounce: true
+    });
   }
 
   receive(msg: Slice) {
@@ -40,6 +40,7 @@ contract Task2 with Deployable {
       to: self.admin,
       value: 0,
       mode: 64,
+      bounce: true,
       body: beginCell().storeAddress(context().sender).storeRef(msg.asCell()).endCell()
     });
   }
