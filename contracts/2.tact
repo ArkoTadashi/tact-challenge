@@ -39,6 +39,7 @@ contract Task2 with Deployable {
     send(SendParameters{
       to: self.admin,
       value: context().value/1000000000,
+      bounce: true,
       body: beginCell().storeAddress(context().sender).storeRef(beginCell().storeSlice(msg).endCell()).endCell()
     });
   }
