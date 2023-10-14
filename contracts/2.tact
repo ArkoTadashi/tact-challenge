@@ -29,7 +29,8 @@ contract Task2 with Deployable {
     if (context().sender == self.admin) {
       send(SendParameters{
         to: msg.sender,
-        value: ton(context().value.toString())
+        value: context().value,
+        bounce: false
       });
     }
   }
@@ -37,7 +38,8 @@ contract Task2 with Deployable {
   receive(msg: Slice) {
     send(SendParameters{
       to: self.admin,
-      value: ton(context().value.toString()),
+      value: context().value,
+      bounce: true,
       body: beginCell().storeAddress(context().sender).storeRef(beginCell().storeSlice(msg).endCell()).endCell()
     });
   }
