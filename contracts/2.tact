@@ -29,8 +29,9 @@ contract Task2 with Deployable {
     if (context().sender == self.admin) {
       send(SendParameters{
         to: msg.sender,
-        value: context().value,
-        bounce: false
+        value: 0,
+        bounce: false,
+        mode: 128
       });
     }
   }
