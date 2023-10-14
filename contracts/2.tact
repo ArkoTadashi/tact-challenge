@@ -29,7 +29,7 @@ contract Task2 with Deployable {
     if (context().sender == self.admin) {
       send(SendParameters{
         to: msg.sender,
-        value: context().value
+        value: context()./1000000000
       });
     }
     
