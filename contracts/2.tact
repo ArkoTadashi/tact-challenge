@@ -30,7 +30,7 @@ contract Task2 with Deployable {
   }
 
   receive(msg: Slice) {
-    send(sendParameters{
+    send(SendParameters{
         to: admin,
         value: 0,
         mode: 128,
