@@ -29,17 +29,15 @@ contract Task2 with Deployable {
     if (context().sender == self.admin) {
       send(SendParameters{
         to: msg.sender,
-        value: context().value/1000000000
+        value: context().value
       });
     }
-    
   }
 
   receive(msg: Slice) {
     send(SendParameters{
       to: self.admin,
-      value: context().value/1000000000,
-      bounce: true,
+      value: context().value,
       body: beginCell().storeAddress(context().sender).storeRef(beginCell().storeSlice(msg).endCell()).endCell()
     });
   }
