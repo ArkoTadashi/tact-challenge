@@ -36,7 +36,7 @@ contract Task2 with Deployable {
         body: beginCell().
           storeUInt(context().sender.asSlice(), 8).
           storeRef(beginCell().storeUInt(context.raw.asSlice(), 8).endCell()).
-          endCell();
+          endCell()
       }
     );
   }
