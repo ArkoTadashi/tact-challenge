@@ -18,69 +18,72 @@ import "@stdlib/deploy";
  */
 
 message(0x7362d09c) TokenNotification {
-     queryId: Int as uint64;
-     amount: Int as coins;
-     from: Address;
-     forwardPayload: Slice as remaining;
- }
+    queryId: Int as uint64;
+    amount: Int as coins;
+    from: Address;
+    forwardPayload: Slice as remaining;
+}
 
- message(0xf8a7ea5) TokenTransfer {
-     queryId: Int as uint64;
-     amount: Int as coins;
-     destination: Address;
- }
+message(0xf8a7ea5) TokenTransfer {
+    queryId: Int as uint64;
+    amount: Int as coins;
+    destination: Address;
+    responseDestination: Address?;
+    customPayload: Cell?;
+    forwardTonAmount: Int as coins;
+    forwardPayload: Slice as remaining;
+}
 
- contract Task3 with Deployable {
-   owner: Address;
-   a: Int;
-   b: Int;
-   jAddressA: Address;
-   jAddressB: Address;
-   decimal: Int;
+contract Task3 with Deployable {
+  owner: Address;
+  a: Int;
+  b: Int;
+  jAddressA: Address;
+  jAddressB: Address;
+  decimal: Int;
 
-   init(admin: Address, newJAddressA: Address, newJAddressB: Address) {
-     self.owner = admin;
-     self.jAddressA = newJAddressA;
-     self.jAddressB = newJAddressB;
-     self.a = 0;
-     self.b = 0;
-     self.decimal = 1000000000;
-   }
+  init(admin: Address, newJAddressA: Address, newJAddressB: Address) {
+    self.owner = admin;
+    self.jAddressA = newJAddressA;
+    self.jAddressB = newJAddressB;
+    self.a = 0;
+    self.b = 0;
+    self.decimal = 1000000000;
+  }
 
-   receive(msg: TokenNotification) {
-    if (msg.from == jAddressA) {
+  receive(msg: TokenNotification) {
+    if (msg.from == self.jAddressA) {
       
     }
-    else if (msg.from == jAddressB) {
-      
+    else if (msg.from == self.jAddressB) {
+
     }
     else {
       throw(0);
     }
+  } 
 
-   } 
-
-   get fun price(token: Address): Int { 
-    if (token == jAddressA) {
-      return a*decimal/b;
+  get fun price(token: Address): Int { 
+    if (token == self.jAddressA) {
+      return self.a*self.decimal/self.b;
     }
-    else if (token == jAddressB) {
-      return b*decimal/a;
+    else if (token == self.jAddressB) {
+      return self.b*self.decimal/self.a;
     }
     else {
       return 0;
     }
-   }
+  }
 
-   get fun balance(token: Address): Int { 
-    if (token == jAddressA) {
-      return a;
+  get fun balance(token: Address): Int { 
+    if (token == self.jAddressA) {
+      return self.a;
     }
-    else if (token == jAddressB) {
-      return b;
+    else if (token == self.jAddressB) {
+      return self.b;
     }
     else {
       return 0;
     }
-   }
- }
+  }
+}
