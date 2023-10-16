@@ -56,7 +56,7 @@ contract Task3 with Deployable {
       
     }
     else if (msg.from == self.jAddressB) {
-
+      
     }
     else {
       throw(0);
